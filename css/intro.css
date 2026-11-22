@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Welcome Intro Video Splash Screen
+   Plays full-viewport before revealing index.html, with Skip and Sound controls.
+   ========================================================================== */
+
+html.intro-active,
+html.intro-active body {
+  overflow: hidden !important;
+  height: 100%;
+}
+
+.intro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 50%, #051c47 0%, #030917 65%, #02050d 100%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s ease-out, visibility 0.45s ease-out;
+}
+
+.intro-splash.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-splash__video {
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100dvh;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+.intro-splash__bar {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.5rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.intro-splash__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4375rem;
+  min-height: 2.75rem;
+  padding: 0 1.125rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(8, 12, 28, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #f4f7ff;
+  font-family: var(--body, "Work Sans", system-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.intro-splash__btn:hover {
+  border-color: #00e5ff;
+  background: rgba(14, 24, 52, 0.94);
+  transform: translateY(-1px);
+}
+
+.intro-splash__btn:focus-visible {
+  outline: 0.1875rem solid #00e5ff;
+  outline-offset: 0.125rem;
+}
+
+.intro-splash__btn--skip {
+  border-color: rgba(0, 229, 255, 0.45);
+}
+
+.intro-splash__progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.intro-splash__progress > span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00e5ff 0%, #2760f0 55%, #8b3dff 100%);
+  transition: width 0.15s linear;
+}
+
+@media (max-width: 640px) {
+  .intro-splash__bar {
+    right: 0.875rem;
+    bottom: 1.125rem;
+  }
+  .intro-splash__btn {
+    min-height: 2.5rem;
+    padding: 0 0.9375rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-splash,
+  .intro-splash__btn,
+  .intro-splash__progress > span {
+    transition: none !important;
+  }
+}

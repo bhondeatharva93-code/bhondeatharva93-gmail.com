@@ -228,8 +228,10 @@ a.chip:hover, button.chip:hover { border-color: var(--ink); }
 /* ---------- Grids and cards ---------- */
 .grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(14.375rem, 1fr)); }
 .grid--pc { grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr)); }
-.card { position: relative; display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
-.card:hover { border-color: var(--line-2); }
+.card { position: relative; display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out; }
+@media (hover: hover) {
+  .card:hover { border-color: var(--line-2); transform: translateY(-7px); box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.48), 0 0 1.25rem rgba(0, 229, 255, 0.14); }
+}
 .card[data-use] { border-top: 0.3125rem solid var(--c); }
 .card__art { position: relative; display: block; text-decoration: none; }
 .card__tags { position: absolute; left: 0.625rem; top: 0.625rem; display: flex; gap: 0.375rem; flex-wrap: wrap; z-index: 1; }
@@ -252,8 +254,10 @@ a.chip:hover, button.chip:hover { border-color: var(--ink); }
 
 /* ---------- Categories ---------- */
 .cats { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); }
-.cat { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); text-decoration: none; font-weight: 700; }
-.cat:hover { border-color: var(--ink); }
+.cat { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); text-decoration: none; font-weight: 700; transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out; }
+@media (hover: hover) {
+  .cat:hover { border-color: var(--ink); transform: translateY(-7px); box-shadow: 0 0.875rem 1.75rem rgba(0, 0, 0, 0.45), 0 0 1rem rgba(0, 229, 255, 0.1); }
+}
 .cat small { display: block; font-weight: 400; color: var(--muted); }
 .cat .ico { color: var(--ink-2); }
 .group-label { font-family: var(--display); font-weight: 700; font-size: 1.625rem; margin: 1.75rem 0 0.75rem; }
@@ -261,7 +265,7 @@ a.chip:hover, button.chip:hover { border-color: var(--ink); }
 
 /* ---------- Tabs and rail ---------- */
 .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.375rem; }
-.rail { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x proximity; padding: 0.125rem 0.125rem 0.875rem; margin: 0 -0.125rem; }
+.rail { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x proximity; padding: 0.75rem 0.625rem 1.375rem; margin: -0.625rem -0.625rem 0; }
 .rail > .card { flex: 0 0 min(16.875rem, 78%); scroll-snap-align: start; }
 
 /* ---------- Build banner ---------- */
@@ -524,6 +528,7 @@ dialog.picker::backdrop { background: rgba(11,23,48,.6); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; animation: none !important; }
+  .card:hover, .cat:hover { transform: none; }
 }
 
 /* ---------- Additions: shop drawer controls, page heads ---------- */

@@ -19,6 +19,13 @@ app.use(['/server', '/package.json', '/package-lock.json'], (_req, res) => {
 });
 
 app.use(
+  '/assets',
+  express.static(path.join(__dirname, 'public', 'assets'), {
+    dotfiles: 'ignore'
+  })
+);
+
+app.use(
   express.static(__dirname, {
     index: 'index.html',
     extensions: ['html'],

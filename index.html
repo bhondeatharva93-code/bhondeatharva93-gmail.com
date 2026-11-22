@@ -9,11 +9,43 @@
   <meta property="og:description" content="Set a budget and see the right PC, with every part listed.">
   <meta property="og:type" content="website">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/intro.css">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/rgb-hero.css">
   <link rel="stylesheet" href="css/assistant.css">
+  <script>document.documentElement.classList.add('intro-active');</script>
 </head>
 <body>
+  <div class="intro-splash" id="intro-splash" role="dialog" aria-modal="true" aria-label="Welcome intro video">
+    <video
+      class="intro-splash__video"
+      id="intro-video"
+      src="/assets/aistudio/Tech_welcome_template_video_4d4adf51_64c1a543.mp4"
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+    ></video>
+    <div class="intro-splash__bar">
+      <button class="intro-splash__btn" id="intro-mute" type="button" aria-pressed="false" aria-label="Unmute intro audio">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M11 5 6 9H2v6h4l5 4V5z"/>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+          <path d="M19 5a9 9 0 0 1 0 14"/>
+        </svg>
+        <span>Sound Off</span>
+      </button>
+      <button class="intro-splash__btn intro-splash__btn--skip" id="intro-skip" type="button">
+        <span>Skip Intro</span>
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+    <div class="intro-splash__progress" aria-hidden="true"><span id="intro-progress"></span></div>
+  </div>
+  <script src="js/intro.js"></script>
+
   <div id="site-header"></div>
 
   <main id="main">

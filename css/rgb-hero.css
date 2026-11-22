@@ -645,12 +645,17 @@
   box-shadow:
     0 1.25rem 2.75rem rgba(0, 0, 0, 0.62),
     0 0 1.75rem rgba(139, 61, 255, 0.22);
-  transition: transform 0.22s ease, border-color 0.22s ease;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
 }
 
-.rgb-pcard:hover {
-  border-color: rgba(0, 229, 255, 0.4);
-  transform: translateY(-0.125rem);
+@media (hover: hover) {
+  .rgb-pcard:hover {
+    border-color: rgba(0, 229, 255, 0.48);
+    transform: translateY(-7px);
+    box-shadow:
+      0 1.625rem 3.25rem rgba(0, 0, 0, 0.72),
+      0 0 2.25rem rgba(139, 61, 255, 0.32);
+  }
 }
 
 .rgb-pcard__top {
@@ -897,5 +902,10 @@
   .rgb-pc-art,
   .rgb-pill__dot {
     animation: none !important;
+  }
+  .rgb-pcard,
+  .rgb-pcard:hover {
+    transition: none;
+    transform: none;
   }
 }
