@@ -184,6 +184,10 @@
       btn.setAttribute('aria-expanded', String(open));
     });
 
+    if (!location.hash) {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+    }
     store.on(refresh);
     refresh();
   }

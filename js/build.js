@@ -67,13 +67,13 @@
         <strong>${money(total)}</strong>
         <p>${total >= 10000 ? 'EMI from ' + money(emi(total, 12, cfg.emi.annualInterestPct)) + ' a month for 12 months' : chosen.length + ' of ' + PCS.SLOTS.length + ' slots filled'}</p>
       </div>
-      <div class="panel" style="padding:18px">
-        <h2 style="font-size:28px">Fit check</h2>
+      <div class="panel" style="padding:1.125rem">
+        <h2 style="font-size:1.75rem">Fit check</h2>
         ${r.checks.length
           ? `<ul class="checks">${r.checks.map(c => `<li class="check-i check-i--${c.level}">${icon(mark[c.level], 18)}<span>${esc(c.text)}</span></li>`).join('')}</ul>`
           : '<p class="note">Choose a processor and a motherboard to start the checks.</p>'}
-        ${r.watts ? `<p class="note" style="margin-top:12px">Estimated load is ${r.watts} W. We suggest a ${r.recommended} W power supply or more.</p>` : ''}
-        ${r.missing.length ? `<p class="note note--box" style="margin-top:12px">Still needed: ${esc(r.missing.join(', '))}.</p>` : ''}
+        ${r.watts ? `<p class="note" style="margin-top:0.75rem">Estimated load is ${r.watts} W. We suggest a ${r.recommended} W power supply or more.</p>` : ''}
+        ${r.missing.length ? `<p class="note note--box" style="margin-top:0.75rem">Still needed: ${esc(r.missing.join(', '))}.</p>` : ''}
       </div>
       <button class="btn btn--amber btn--block" type="button" id="add-all"${ready ? '' : ' disabled'}>Add all parts to cart</button>
       ${chosen.length ? `<a class="btn btn--ghost btn--block" href="${esc(PCS.wa(buildText(chosen, total)))}" target="_blank" rel="noopener">${icon('chat', 18)}Send this build on WhatsApp</a>` : ''}

@@ -9,7 +9,7 @@
 
   if (!p) {
     $('#crumbs').innerHTML = '<li><a href="index.html">Home</a></li><li>Product not found</li>';
-    $('#pdp').innerHTML = `<div class="empty" style="margin-bottom:72px"><h3>We could not find that product</h3>
+    $('#pdp').innerHTML = `<div class="empty" style="margin-bottom:4.5rem"><h3>We could not find that product</h3>
       <p>The link may be old, or the product may have been removed.</p><a class="btn" href="shop.html">Browse all products</a></div>`;
     return;
   }
@@ -59,7 +59,7 @@
       <div class="pdp__buy">
         <p class="pdp__brand">${use ? esc(use.label) + ' PC by ' + esc(p.brand) : esc(p.brand)}</p>
         <h1>${esc(p.name)}</h1>
-        <ul class="card__specs" style="font-size:17px">${p.specs.map(s => `<li>${esc(s)}</li>`).join('')}</ul>
+        <ul class="card__specs" style="font-size:1.0625rem">${p.specs.map(s => `<li>${esc(s)}</li>`).join('')}</ul>
         <p class="pdp__price"><strong>${money(p.price)}</strong>${p.mrp > p.price ? `<s>${money(p.mrp)}</s>` : ''}${off ? `<em>${off}% off</em>` : ''}</p>
         <p class="pdp__emi">${p.price >= 10000 ? `EMI from ${money(monthly)} a month for 12 months. Pick EMI at checkout.` : 'Prices include GST.'}</p>
         ${p.stock ? `
@@ -74,7 +74,7 @@
         </div>` : `
         <div class="buyrow"><button class="btn" type="button" disabled>Out of stock</button>
           <a class="btn btn--ghost" href="${esc(PCS.wa('Hi, please tell me when this is back in stock: ' + p.name))}" target="_blank" rel="noopener">Ask when it is back</a></div>`}
-        <div class="btn-row" style="margin-top:6px">
+        <div class="btn-row" style="margin-top:0.375rem">
           <a class="btn btn--ghost btn--sm" href="${esc(PCS.wa(waText))}" target="_blank" rel="noopener">${icon('chat', 18)}Ask about this on WhatsApp</a>
           <button class="btn btn--ghost btn--sm" type="button" data-wish="${p.id}" aria-pressed="${store.wish.has(p.id)}">${icon('heart', 18)}Save to wishlist</button>
         </div>
@@ -102,7 +102,7 @@
       <section class="panel" aria-labelledby="h-specs">
         <h2 id="h-specs">${p.parts ? 'Every part inside' : 'Specifications'}</h2>
         <dl class="sheet">${rows.map(r => `<div><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join('')}</dl>
-        ${p.parts ? `<p class="note" style="margin-top:14px">Want to change a part? <a href="${esc(PCS.wa('Hi, I want to change a part in ' + p.name + '.'))}" target="_blank" rel="noopener">Message us</a> or <a href="build.html">build your own</a>.</p>` : ''}
+        ${p.parts ? `<p class="note" style="margin-top:0.875rem">Want to change a part? <a href="${esc(PCS.wa('Hi, I want to change a part in ' + p.name + '.'))}" target="_blank" rel="noopener">Message us</a> or <a href="build.html">build your own</a>.</p>` : ''}
       </section>
       <section class="panel" aria-labelledby="h-ship">
         <h2 id="h-ship">Delivery and warranty</h2>
@@ -112,12 +112,12 @@
           <div><dt>Warranty</dt><dd>Brand warranty</dd></div>
           <div><dt>Returns</dt><dd><a href="policies.html#returns">Read the policy</a></dd></div>
         </dl>
-        <p class="note" style="margin-top:14px">Sample terms. Edit them in <code>js/product.js</code> and <code>policies.html</code>.</p>
+        <p class="note" style="margin-top:0.875rem">Sample terms. Edit them in <code>js/product.js</code> and <code>policies.html</code>.</p>
       </section>
     </div>
-    ${related.length ? `<section style="margin-bottom:56px" aria-labelledby="h-rel"><div class="block__head"><h2 id="h-rel">Similar in ${esc(cat.label)}</h2><a class="more" href="shop.html?cat=${cat.id}">See all</a></div>
+    ${related.length ? `<section style="margin-bottom:3.5rem" aria-labelledby="h-rel"><div class="block__head"><h2 id="h-rel">Similar in ${esc(cat.label)}</h2><a class="more" href="shop.html?cat=${cat.id}">See all</a></div>
       <div class="grid${p.cat === 'prebuilt' ? ' grid--pc' : ''}">${related.map(ui.card).join('')}</div></section>` : ''}
-    ${recent.length ? `<section style="margin-bottom:72px" aria-labelledby="h-rec"><div class="block__head"><h2 id="h-rec">Recently viewed</h2></div>
+    ${recent.length ? `<section style="margin-bottom:4.5rem" aria-labelledby="h-rec"><div class="block__head"><h2 id="h-rec">Recently viewed</h2></div>
       <div class="grid">${recent.map(ui.card).join('')}</div></section>` : ''}`;
   ui.refresh();
 })(window.PCS);

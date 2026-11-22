@@ -150,17 +150,24 @@
         '</ul>' +
       '</div>' +
       '<div class="rgb-showcase" aria-roledescription="carousel" aria-label="Featured RGB gaming PCs">' +
-        '<div class="rgb-stage">' +
-          '<div class="rgb-fbadge rgb-fbadge--top">' + icon('gamepad', 15) + '<span>RGB Gaming Ready</span></div>' +
-          '<div class="rgb-fbadge rgb-fbadge--offer" id="rgb-offer-badge">' + icon('flame', 15) + '<span>SPECIAL OFFER</span></div>' +
-          '<div class="rgb-fbadge rgb-fbadge--emi">' + icon('card', 15) + '<span>Easy EMI Available</span></div>' +
-          '<div class="rgb-orb">' +
-            '<div class="rgb-ring" aria-hidden="true"></div>' +
-            '<div class="rgb-frame">' +
-              '<div class="rgb-pc-art" id="rgb-pc-art"></div>' +
-            '</div>' +
-          '</div>' +
-          '<article class="rgb-pcard" id="rgb-pcard" aria-live="polite"></article>' +
+        '<div class="rgb-stages">' +
+          [0, 1, 2].map(function (slot) {
+            var isPrimary = slot === 0;
+            return (
+              '<div class="rgb-stage' + (isPrimary ? '' : ' rgb-stage--extra') + '" data-stage="' + slot + '">' +
+                '<div class="rgb-fbadge rgb-fbadge--top">' + icon('gamepad', 15) + '<span>RGB Gaming Ready</span></div>' +
+                '<div class="rgb-fbadge rgb-fbadge--offer"' + (isPrimary ? ' id="rgb-offer-badge"' : '') + '>' + icon('flame', 15) + '<span>SPECIAL OFFER</span></div>' +
+                '<div class="rgb-fbadge rgb-fbadge--emi">' + icon('card', 15) + '<span>Easy EMI Available</span></div>' +
+                '<div class="rgb-orb">' +
+                  '<div class="rgb-ring" aria-hidden="true"></div>' +
+                  '<div class="rgb-frame">' +
+                    '<div class="rgb-pc-art"' + (isPrimary ? ' id="rgb-pc-art"' : '') + '></div>' +
+                  '</div>' +
+                '</div>' +
+                '<article class="rgb-pcard"' + (isPrimary ? ' id="rgb-pcard" aria-live="polite"' : '') + '></article>' +
+              '</div>'
+            );
+          }).join('') +
         '</div>' +
         (featured.length > 1
           ? '<div class="rgb-dots" role="group" aria-label="Choose featured PC">' +
@@ -174,9 +181,7 @@
 
   var searchForm = util.$('.rgb-search', root);
   var searchInput = util.$('#rgb-hero-search', root);
-  var artEl = util.$('#rgb-pc-art', root);
-  var cardEl = util.$('#rgb-pcard', root);
-  var offerBadge = util.$('#rgb-offer-badge', root);
+  var stages = util.$$('.rgb-stage', root);
   var showcaseEl = util.$('.rgb-showcase', root);
 
   searchForm.addEventListener('submit', function (e) {
@@ -189,43 +194,55 @@
     location.href = buildSearchHref(val);
   });
 
+  function buildCardMarkup(info) {
+    return (
+      '<div class="rgb-pcard__top">' +
+        '<span class="rgb-pcard__specs">' + esc(info.specLine) + '</span>' +
+        (info.off >= 5 ? '<span class="rgb-pcard__off">' + info.off + '% OFF</span>' : '') +
+      '</div>' +
+      '<h2 class="rgb-pcard__name"><a href="' + info.href + '">' + esc(info.name) + '</a></h2>' +
+      '<div class="rgb-pcard__foot">' +
+        '<div class="rgb-pcard__prices">' +
+          '<strong>' + money(info.price) + '</strong>' +
+          (info.mrp > info.price ? '<s>' + money(info.mrp) + '</s>' : '') +
+          (info.monthly ? '<span class="rgb-pcard__emi">EMI from ' + money(info.monthly) + '/mo</span>' : '') +
+        '</div>' +
+        '<a class="rgb-buy-btn" href="' + info.href + '">Buy Now</a>' +
+      '</div>'
+    );
+  }
+
   function renderSlide(idx, animate) {
     activeIndex = (idx + featured.length) % featured.length;
-    var p = featured[activeIndex];
-    var info = formatProductSummary(p, PCS.discount, util.emi, cfg.emi);
-    var hue = hues[activeIndex % hues.length];
 
-    if (offerBadge) {
-      offerBadge.hidden = !(info.off >= 5);
-    }
+    stages.forEach(function (stageEl, slot) {
+      var itemIdx = (activeIndex + slot) % featured.length;
+      var p = featured[itemIdx];
+      var info = formatProductSummary(p, PCS.discount, util.emi, cfg.emi);
+      var hue = hues[itemIdx % hues.length];
+      var artEl = util.$('.rgb-pc-art', stageEl);
+      var cardEl = util.$('.rgb-pcard', stageEl);
+      var offerBadge = util.$('.rgb-fbadge--offer', stageEl);
 
-    var draw = function () {
-      artEl.innerHTML = PCS.tower ? PCS.tower(hue) : '';
-      cardEl.innerHTML =
-        '<div class="rgb-pcard__top">' +
-          '<span class="rgb-pcard__specs">' + esc(info.specLine) + '</span>' +
-          (info.off >= 5 ? '<span class="rgb-pcard__off">' + info.off + '% OFF</span>' : '') +
-        '</div>' +
-        '<h2 class="rgb-pcard__name"><a href="' + info.href + '">' + esc(info.name) + '</a></h2>' +
-        '<div class="rgb-pcard__foot">' +
-          '<div class="rgb-pcard__prices">' +
-            '<strong>' + money(info.price) + '</strong>' +
-            (info.mrp > info.price ? '<s>' + money(info.mrp) + '</s>' : '') +
-            (info.monthly ? '<span class="rgb-pcard__emi">EMI from ' + money(info.monthly) + '/mo</span>' : '') +
-          '</div>' +
-          '<a class="rgb-buy-btn" href="' + info.href + '">Buy Now</a>' +
-        '</div>';
-    };
+      if (offerBadge) {
+        offerBadge.hidden = !(info.off >= 5);
+      }
 
-    if (animate && !(util.prefersReducedMotion && util.prefersReducedMotion())) {
-      artEl.classList.add('is-switching');
-      setTimeout(function () {
+      var draw = function () {
+        artEl.innerHTML = PCS.tower ? PCS.tower(hue) : '';
+        cardEl.innerHTML = buildCardMarkup(info);
+      };
+
+      if (animate && !(util.prefersReducedMotion && util.prefersReducedMotion())) {
+        artEl.classList.add('is-switching');
+        setTimeout(function () {
+          draw();
+          artEl.classList.remove('is-switching');
+        }, 150);
+      } else {
         draw();
-        artEl.classList.remove('is-switching');
-      }, 150);
-    } else {
-      draw();
-    }
+      }
+    });
 
     util.$$('.rgb-dot', root).forEach(function (dot, i) {
       dot.setAttribute('aria-current', i === activeIndex ? 'true' : 'false');

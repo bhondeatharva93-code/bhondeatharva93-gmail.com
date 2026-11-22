@@ -80,8 +80,9 @@
   PCS.icon = function (name, size, cls) {
     var body = PCS.icons[name] || '';
     size = size || 20;
+    var rem = (size / 16) + 'rem';
     return '<svg class="ico' + (cls ? ' ' + cls : '') + '" width="' + size + '" height="' + size +
-      '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+      '" style="--ico-s:' + rem + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
       body + '</svg>';
   };
 
